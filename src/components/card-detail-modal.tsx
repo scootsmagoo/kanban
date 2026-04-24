@@ -31,7 +31,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn, formatBytes, initials, readableTextColor } from "@/lib/utils";
+import { cn, dateFromApiTimestamp, formatBytes, initials, readableTextColor } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface Detail {
@@ -134,7 +134,8 @@ export function CardDetailModal({ cardId, boardId, labels, onClose }: Props) {
                 onSave={(title) => updateCardMut.mutate({ title })}
               />
               <p className="text-xs text-muted-foreground mt-1">
-                Created {format(new Date(card.createdAt * 1000), "MMM d, yyyy")}
+                Created{" "}
+                {format(dateFromApiTimestamp(card.createdAt) ?? new Date(0), "MMM d, yyyy")}
               </p>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">
@@ -191,7 +192,10 @@ export function CardDetailModal({ cardId, boardId, labels, onClose }: Props) {
                         }
                       />
                       <span className="text-sm">
-                        {format(new Date(card.dueDate * 1000), "MMM d, yyyy")}
+                        {format(
+                          dateFromApiTimestamp(card.dueDate) ?? new Date(0),
+                          "MMM d, yyyy",
+                        )}
                       </span>
                     </div>
                   </Section>
@@ -259,7 +263,7 @@ export function CardDetailModal({ cardId, boardId, labels, onClose }: Props) {
               />
 
               <DueDatePicker
-                value={card.dueDate ? new Date(card.dueDate * 1000) : null}
+                value={dateFromApiTimestamp(card.dueDate)}
                 onChange={(d) =>
                   updateCardMut.mutate({ dueDate: d ? Math.floor(d.getTime() / 1000) : null })
                 }
@@ -583,7 +587,10 @@ function CommentItem({ comment, onChange }: { comment: CommentRow; onChange: () 
       <div className="flex-1 min-w-0">
         <div className="text-xs text-muted-foreground">
           <span className="font-medium text-foreground">{comment.authorName}</span> ·{" "}
-          {format(new Date(comment.createdAt * 1000), "MMM d 'at' h:mm a")}
+          {format(
+            dateFromApiTimestamp(comment.createdAt) ?? new Date(0),
+            "MMM d 'at' h:mm a",
+          )}
         </div>
         <div className="mt-1 rounded bg-muted/40 p-2">
           <Markdown>{comment.body}</Markdown>
@@ -636,7 +643,7 @@ function AttachmentRow({
         </a>
         <div className="text-xs text-muted-foreground">
           {formatBytes(attachment.sizeBytes)} · added{" "}
-          {format(new Date(attachment.createdAt * 1000), "MMM d")}
+          {format(dateFromApiTimestamp(attachment.createdAt) ?? new Date(0), "MMM d")}
         </div>
       </div>
       <Button variant="ghost" size="icon" onClick={() => del.mutate()} aria-label="Remove">

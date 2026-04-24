@@ -17,7 +17,7 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, dateFromApiTimestamp } from "@/lib/utils";
 
 interface CalCard {
   id: string;
@@ -46,7 +46,7 @@ export default function CalendarPage() {
   const cardsByDay = useMemo(() => {
     const map = new Map<string, CalCard[]>();
     for (const c of data?.cards ?? []) {
-      const key = format(new Date(c.dueDate * 1000), "yyyy-MM-dd");
+      const key = format(dateFromApiTimestamp(c.dueDate) ?? new Date(0), "yyyy-MM-dd");
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(c);
     }

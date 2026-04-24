@@ -5,7 +5,7 @@ import { CalendarDays, CheckSquare, MessageSquare, Paperclip } from "lucide-reac
 import { useQuery } from "@tanstack/react-query";
 import { format, isPast, isToday } from "date-fns";
 import { api, type Card, type Label } from "@/lib/api";
-import { cn, readableTextColor } from "@/lib/utils";
+import { cn, dateFromApiTimestamp, readableTextColor } from "@/lib/utils";
 
 interface Props {
   card: Card;
@@ -46,7 +46,7 @@ export function KanbanCard({ card, labels, dragOverlay }: Props) {
   const commentCount = detail?.comments.length ?? 0;
   const attachmentCount = detail?.attachments.length ?? 0;
 
-  const due = card.dueDate ? new Date(card.dueDate * 1000) : null;
+  const due = dateFromApiTimestamp(card.dueDate);
   const isCompleted = !!card.completedAt;
 
   return (

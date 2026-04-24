@@ -16,7 +16,7 @@
     {
       "binding": "DB",
       "database_name": "kanban-db",
-      "database_id": "REPLACE_WITH_YOUR_D1_ID",
+      "database_id": "2e7874ac-f4ea-4f1d-b4c9-4dbf038a7e8e",
       "migrations_dir": "drizzle"
     }
   ],
@@ -27,7 +27,7 @@
     }
   ],
   "vars": {
-    "APP_URL": "http://localhost:5173"
+    "APP_URL": "https://kanban.adam-021.workers.dev"
   }
   // Secrets to set via `wrangler secret put`:
   //   BETTER_AUTH_SECRET

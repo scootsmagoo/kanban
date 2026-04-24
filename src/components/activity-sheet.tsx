@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { initials } from "@/lib/utils";
+import { dateFromApiTimestamp, initials } from "@/lib/utils";
 
 export function ActivitySheet({ boardId, onClose }: { boardId: string; onClose: () => void }) {
   const { data } = useQuery({
@@ -35,7 +35,9 @@ export function ActivitySheet({ boardId, onClose }: { boardId: string; onClose: 
                   <span className="text-muted-foreground">{describe(a)}</span>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(a.createdAt * 1000), { addSuffix: true })}
+                  {formatDistanceToNow(dateFromApiTimestamp(a.createdAt) ?? new Date(0), {
+                    addSuffix: true,
+                  })}
                 </div>
               </div>
             </div>

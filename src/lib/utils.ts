@@ -30,3 +30,20 @@ export function formatBytes(n: number): string {
   if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
   return `${(n / 1024 / 1024).toFixed(1)} MB`;
 }
+
+/**
+ * D1 + Drizzle may return timestamps as Unix seconds in JSON, or as ISO
+ * strings if a Date was stringified. UI code that did `* 1000` breaks on
+ * strings and can crash `date-fns` in the open-card modal.
+ */
+export function dateFromApiTimestamp(
+  t: number | string | null | undefined,
+): Date | null {
+  if (t == null) return null;
+  if (typeof t === "string") return new Date(t);
+  if (typeof t === "number") {
+    if (!Number.isFinite(t)) return null;
+    return new Date(t < 1e12 ? t * 1000 : t);
+  }
+  return null;
+}
