@@ -1,0 +1,22 @@
+# Copy this file to .dev.vars (NOT committed) and fill in real values.
+# These are loaded by Wrangler during `npm run dev`.
+
+# A long random string. Generate with: openssl rand -base64 32
+BETTER_AUTH_SECRET=replace-me-with-a-32-byte-random-string
+
+# Google OAuth (https://console.cloud.google.com/apis/credentials)
+# Authorized redirect URI: http://localhost:5173/api/auth/callback/google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# GitHub OAuth (https://github.com/settings/developers)
+# Authorization callback URL: http://localhost:5173/api/auth/callback/github
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+# Resend (https://resend.com) — for magic links and email verification
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=Kanban <noreply@yourdomain.com>
+
+# Optional: override the public URL the app thinks it's running at
+APP_URL=http://localhost:5173

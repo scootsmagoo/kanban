@@ -1,0 +1,40 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kanban",
+  "main": "worker/index.ts",
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "kanban-db",
+      "database_id": "REPLACE_WITH_YOUR_D1_ID",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "ATTACHMENTS",
+      "bucket_name": "kanban-attachments"
+    }
+  ],
+  "vars": {
+    "APP_URL": "http://localhost:5173"
+  }
+  // Secrets to set via `wrangler secret put`:
+  //   BETTER_AUTH_SECRET
+  //   GOOGLE_CLIENT_ID
+  //   GOOGLE_CLIENT_SECRET
+  //   GITHUB_CLIENT_ID
+  //   GITHUB_CLIENT_SECRET
+  //   RESEND_API_KEY
+  //   RESEND_FROM_EMAIL
+}
